@@ -20,6 +20,9 @@ public class HUD {
 		redValue = 255-greenValue;
 		
 		score++;
+		if(HEALTH == 0){
+			System.exit(1);
+		}
 	}
 	public int getScore() {
 		return score;

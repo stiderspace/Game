@@ -2,7 +2,8 @@ package com.jodelahithit.main;
 
 import java.util.Random;
 
-import Objects.BasicEnemy;
+import com.jodelahithit.objects.BasicEnemy;
+import com.jodelahithit.objects.StraightEnemy;
 
 public class Spawn {
 
@@ -20,13 +21,12 @@ public class Spawn {
 	public void tick() {
 		scoreKeep++;
 
-		if (scoreKeep >= 300) {
+		if (scoreKeep >= 100) {
+
 			scoreKeep = 0;
 			hud.setLevel(hud.getLevel() + 1);
-
-			if (hud.getLevel() == 2) {
-				handler.addObject(new BasicEnemy(r.nextInt(Main.WIDTH), r.nextInt(Main.HEIGHT), ID.BasicEnemy, handler));
-			}
+			handler.addObject(new StraightEnemy(r.nextInt(Main.WIDTH), r.nextInt(Main.HEIGHT), ID.StraightEnemy, handler));
+			handler.addObject(new BasicEnemy(r.nextInt(Main.WIDTH), r.nextInt(Main.HEIGHT), ID.BasicEnemy, handler));
 		}
 	}
 }

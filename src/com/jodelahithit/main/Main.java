@@ -6,8 +6,8 @@ import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.util.Random;
 
-import Objects.BasicEnemy;
-import Objects.Player;
+import com.jodelahithit.objects.BasicEnemy;
+import com.jodelahithit.objects.Player;
 
 public class Main extends Canvas implements Runnable {
 
@@ -35,7 +35,6 @@ public class Main extends Canvas implements Runnable {
 
 		handler.addObject(new Player(WIDTH / 2 - 32, HEIGHT / 2 - 32, ID.Player, handler));
 		handler.addObject(new BasicEnemy(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.BasicEnemy, handler));
-
 	}
 
 	public synchronized void start() {
