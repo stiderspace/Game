@@ -3,6 +3,7 @@ package com.jodelahithit.main;
 import java.util.Random;
 
 import com.jodelahithit.main.objects.BasicEnemy;
+import com.jodelahithit.main.objects.SmartEnemy;
 import com.jodelahithit.main.objects.StraightEnemy;
 
 public class Spawn {
@@ -28,7 +29,7 @@ public class Spawn {
 			handler.addObject(new BasicEnemy(r.nextInt(Main.WIDTH), r.nextInt(Main.HEIGHT), ID.BasicEnemy, handler));
 			switch (hud.getLevel()) {
 			case 3:
-				handler.addObject(new StraightEnemy(r.nextInt(Main.WIDTH), r.nextInt(Main.HEIGHT), ID.StraightEnemy, handler));
+				handler.addObject(new SmartEnemy(r.nextInt(Main.WIDTH), r.nextInt(Main.HEIGHT), 2, ID.SmartEnemy, handler));
 				break;
 			case 5:
 				handler.addObject(new StraightEnemy(r.nextInt(Main.WIDTH), r.nextInt(Main.HEIGHT), ID.StraightEnemy, handler));

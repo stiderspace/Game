@@ -20,7 +20,7 @@ public class Trail extends GameObject {
 	private float life;
 	private boolean resize;
 
-	public Trail(int x, int y, ID id, Color color, int size, float life, boolean resize, Handler handler) {
+	public Trail(float x, float y, ID id, Color color, int size, float life, boolean resize, Handler handler) {
 		super(x, y, id);
 		this.handler = handler;
 		this.color = color;
@@ -49,7 +49,7 @@ public class Trail extends GameObject {
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setComposite(makeTransparent(alpha));
 		g.setColor(color);
-		g.fillRect(x, y, (int) size, (int) size);
+		g.fillRect((int)x, (int)y, (int) size, (int) size);
 
 		g2d.setComposite(makeTransparent(1));
 	}
