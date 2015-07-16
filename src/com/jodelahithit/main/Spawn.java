@@ -2,8 +2,8 @@ package com.jodelahithit.main;
 
 import java.util.Random;
 
-import com.jodelahithit.objects.BasicEnemy;
-import com.jodelahithit.objects.StraightEnemy;
+import com.jodelahithit.main.objects.BasicEnemy;
+import com.jodelahithit.main.objects.StraightEnemy;
 
 public class Spawn {
 
@@ -21,12 +21,27 @@ public class Spawn {
 	public void tick() {
 		scoreKeep++;
 
-		if (scoreKeep >= 100) {
+		if (scoreKeep >= 200) {
 
 			scoreKeep = 0;
 			hud.setLevel(hud.getLevel() + 1);
-			handler.addObject(new StraightEnemy(r.nextInt(Main.WIDTH), r.nextInt(Main.HEIGHT), ID.StraightEnemy, handler));
 			handler.addObject(new BasicEnemy(r.nextInt(Main.WIDTH), r.nextInt(Main.HEIGHT), ID.BasicEnemy, handler));
+			switch (hud.getLevel()) {
+			case 3:
+				handler.addObject(new StraightEnemy(r.nextInt(Main.WIDTH), r.nextInt(Main.HEIGHT), ID.StraightEnemy, handler));
+				break;
+			case 5:
+				handler.addObject(new StraightEnemy(r.nextInt(Main.WIDTH), r.nextInt(Main.HEIGHT), ID.StraightEnemy, handler));
+				break;
+			case 7:
+				handler.addObject(new StraightEnemy(r.nextInt(Main.WIDTH), r.nextInt(Main.HEIGHT), ID.StraightEnemy, handler));
+				break;
+			case 9:
+				handler.addObject(new StraightEnemy(r.nextInt(Main.WIDTH), r.nextInt(Main.HEIGHT), ID.StraightEnemy, handler));
+				break;
+
+			}
+
 		}
 	}
 }

@@ -6,8 +6,8 @@ import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.util.Random;
 
-import com.jodelahithit.objects.BasicEnemy;
-import com.jodelahithit.objects.Player;
+import com.jodelahithit.main.objects.BasicEnemy;
+import com.jodelahithit.main.objects.Player;
 
 public class Main extends Canvas implements Runnable {
 
