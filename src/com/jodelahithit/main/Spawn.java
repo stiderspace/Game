@@ -19,6 +19,12 @@ public class Spawn {
 		this.hud = hud;
 	}
 
+	public void reset(){
+		hud.setLevel(0);
+		hud.setScore(1);
+		scoreKeep = 0;
+	}
+	
 	public void tick() {
 		scoreKeep++;
 

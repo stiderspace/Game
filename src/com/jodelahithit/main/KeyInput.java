@@ -3,13 +3,22 @@ package com.jodelahithit.main;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import com.jodelahithit.main.Main.STATE;
+
 public class KeyInput extends KeyAdapter {
 
 	private Handler handler;
+	private Main main;
+	private Menu menu;
+	private Spawn spawner;
+	
 	private boolean[] KeyDown = new boolean[4];
 
-	public KeyInput(Handler handler) {
+	public KeyInput(Handler handler, Main main, Spawn spawner, Menu menu) {
 		this.handler = handler;
+		this.main = main;
+		this.spawner = spawner;
+		this.menu = menu;
 
 		KeyDown[0] = false;
 		KeyDown[1] = false;
@@ -19,7 +28,7 @@ public class KeyInput extends KeyAdapter {
 
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
-
+		if(main.GameState == STATE.Game){
 		for (int i = 0; i < handler.object.size(); i++) {
 			GameObject tempObject = handler.object.get(i);
 
@@ -43,8 +52,17 @@ public class KeyInput extends KeyAdapter {
 
 			}
 		}
-		if (key == KeyEvent.VK_ESCAPE)
-			System.exit(11);
+		if (key == KeyEvent.VK_ESCAPE){
+			main.goToMenu();
+
+
+		}
+		}else if(main.GameState == STATE.Menu){
+			if (key == KeyEvent.VK_ESCAPE){
+				System.exit(1);
+
+			}
+		}
 	}
 
 	public void keyReleased(KeyEvent e) {

@@ -6,7 +6,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.util.Random;
 
-import com.jodelahithit.main.objects.BasicEnemy;
+import com.jodelahithit.main.objects.MenuParticle;
 import com.jodelahithit.main.objects.Player;
 
 public class Main extends Canvas implements Runnable {
@@ -20,20 +20,29 @@ public class Main extends Canvas implements Runnable {
 	private HUD hud;
 	private Random r;
 	private Spawn spawner;
-	
+	private Menu menu;
+
+	public enum STATE {
+		Menu, Game, Help
+	};
+
+	public STATE GameState = STATE.Menu;
+	private STATE oldState;
+
 	public Main() {
-		
+
 		handler = new Handler();
-		this.addKeyListener(new KeyInput(handler));
-		
-		hud = new HUD();
+		menu = new Menu(this, handler, hud);
+		hud = new HUD(this);
 		spawner = new Spawn(handler, hud);
 
+		this.addKeyListener(new KeyInput(handler, this, spawner, menu));
+		this.addMouseListener(menu);
+
 		new Window(WIDTH, HEIGHT, "Game", this);
-		
+
 		r = new Random();
 
-		handler.addObject(new Player(WIDTH / 2 - 32, HEIGHT / 2 - 32, ID.Player, handler));
 	}
 
 	public synchronized void start() {
@@ -84,8 +93,28 @@ public class Main extends Canvas implements Runnable {
 
 	private void tick() {
 		handler.tick();
-		hud.tick();
-		spawner.tick();
+		if (GameState == STATE.Game) {
+			hud.tick();
+			spawner.tick();
+		} else if (GameState == STATE.Menu) {
+			menu.tick();
+		}
+		if (GameState != oldState) {
+			if (!(GameState == STATE.Help)) {
+				if (!(oldState == STATE.Help)) {
+					handler.object.clear();
+
+					if (GameState == STATE.Menu || GameState == STATE.Help) {
+						for (int i = 0; i < 20; i++) {
+							handler.addObject(new MenuParticle(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.MenuParticle, handler));
+						}
+					} else if (GameState == STATE.Game) {
+						handler.addObject(new Player(WIDTH / 2 - 32, HEIGHT / 2 - 32, ID.Player, handler));
+					}
+				}
+			}
+			oldState = GameState;
+		}
 	}
 
 	private void render() {
@@ -97,11 +126,14 @@ public class Main extends Canvas implements Runnable {
 		Graphics g = bs.getDrawGraphics();
 		g.setColor(Color.black);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
-		
-		handler.render(g);
 
-		hud.render(g);
-		
+		handler.render(g);
+		if (GameState == STATE.Game) {
+			hud.render(g);
+		} else if (GameState == STATE.Menu || GameState == STATE.Help) {
+			menu.render(g);
+		}
+
 		g.dispose();
 		bs.show();
 	}
@@ -112,11 +144,21 @@ public class Main extends Canvas implements Runnable {
 		else if (var <= min)
 			return var = min;
 		else
-			return var; 
+			return var;
 
 	}
 
 	public static void main(String[] args) {
 		new Main();
+	}
+
+	public void goToMenu() {
+		menu.setHighScore(hud.getScore());
+		HUD.resetHealth();
+		spawner.reset();
+		GameState = STATE.Menu;
+		for (int i = 0; i < 20; i++) {
+			handler.addObject(new MenuParticle(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.MenuParticle, handler));
+		}
 	}
 }
